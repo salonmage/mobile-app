@@ -188,6 +188,10 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-config')
+    implementation project(':react-native-webview')
+    implementation project(':lottie-react-native')
+    implementation project(':react-native-fast-storage')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

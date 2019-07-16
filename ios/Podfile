@@ -2,7 +2,7 @@ platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 target 'SalonMage' do
-  # Pods for SalonMage
+
   pod 'React', :path => '../node_modules/react-native/'
   pod 'React-Core', :path => '../node_modules/react-native/React'
   pod 'React-DevSupport', :path => '../node_modules/react-native/React'
@@ -28,20 +28,23 @@ target 'SalonMage' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  # Third party
+  pod 'ReactNativeNavigation', :path => '../node_modules/react-native-navigation'
+
+  pod 'MMKV'
+  pod 'RNFastStorage', :path => '../node_modules/react-native-fast-storage'
+
+  pod 'lottie-ios', :path => '../node_modules/lottie-ios'
+  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
   target 'SalonMageTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
   use_native_modules!
-end
-
-target 'SalonMage-tvOS' do
-  # Pods for SalonMage-tvOS
-
-  target 'SalonMage-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
 end

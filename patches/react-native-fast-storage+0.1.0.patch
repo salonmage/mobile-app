@@ -1,0 +1,54 @@
+diff --git a/node_modules/react-native-fast-storage/RNFastStorage.podspec b/node_modules/react-native-fast-storage/RNFastStorage.podspec
+new file mode 100644
+index 0000000..4895149
+--- /dev/null
++++ b/node_modules/react-native-fast-storage/RNFastStorage.podspec
+@@ -0,0 +1,16 @@
++Pod::Spec.new do |s|
++  s.name         = "RNFastStorage"
++  s.version      = "1.0.0"
++  s.summary      = "MMKV for React Native (iOS and Android)"
++  s.homepage     = "https://github.com/FidMe/react-native-fast-storage"
++  s.license      = "MIT"
++  s.author       = { "author" => "contact@michaelvilleneuve.fr" }
++  s.platform     = :ios, "9.0"
++  s.source       = { :git => "https://github.com/FidMe/react-native-fast-storage.git", :tag => "master" }
++  s.source_files  = "ios/**/*.{h,m}"
++  s.requires_arc = true
++
++  s.dependency "React"
++  s.dependency "MMKV"
++
++end
+\ No newline at end of file
+diff --git a/node_modules/react-native-fast-storage/ios/RNFastStorage.podspec b/node_modules/react-native-fast-storage/ios/RNFastStorage.podspec
+deleted file mode 100644
+index 68a8a61..0000000
+--- a/node_modules/react-native-fast-storage/ios/RNFastStorage.podspec
++++ /dev/null
+@@ -1,24 +0,0 @@
+-
+-Pod::Spec.new do |s|
+-  s.name         = "RNFastStorage"
+-  s.version      = "1.0.0"
+-  s.summary      = "RNFastStorage"
+-  s.description  = <<-DESC
+-                  RNFastStorage
+-                   DESC
+-  s.homepage     = ""
+-  s.license      = "MIT"
+-  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+-  s.author             = { "author" => "author@domain.cn" }
+-  s.platform     = :ios, "7.0"
+-  s.source       = { :git => "https://github.com/author/RNFastStorage.git", :tag => "master" }
+-  s.source_files  = "RNFastStorage/**/*.{h,m}"
+-  s.requires_arc = true
+-
+-
+-  s.dependency "React"
+-  #s.dependency "others"
+-
+-end
+-
+-  
+\ No newline at end of file
