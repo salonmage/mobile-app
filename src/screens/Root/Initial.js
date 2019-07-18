@@ -1,12 +1,9 @@
-import React, { useEffect, useContext, useCallback } from 'react';
-import { View, Text } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectors } from '../../store/models';
-import styled, { ThemeContext } from 'styled-components';
 
-import Touchable from '../../components/Touchable';
-import { setPrimaryLayout, gotoSignIn } from '../../common/layout';
+import { gotoPrimaryScreen, popScreen, showSignIn } from '../../common/layout';
+
+import { selectors } from '../../store/models';
 //-----------------------------------------------
 
 export default function Initial(props) {
@@ -16,15 +13,14 @@ export default function Initial(props) {
   useEffect(() => {
     if (isAthenticated === null) return;
     if (isAthenticated) {
-      setPrimaryLayout(type);
+      gotoPrimaryScreen(props.componentId, type);
     } else {
-      gotoSignIn(props.componentId);
+      if (type) {
+        popScreen(type);
+      }
+      showSignIn();
     }
-  }, [isAthenticated, type]);
+  }, [isAthenticated]);
 
-  return (
-    <View>
-      <Text>Initial</Text>
-    </View>
-  );
+  return null;
 }

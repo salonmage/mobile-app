@@ -1,7 +1,5 @@
 import { Navigation } from 'react-native-navigation';
 import { Platform } from 'react-native';
-import memoizeOne from 'memoize-one';
-import deepmerge from 'deepmerge';
 
 import withProviders from './provider';
 import theme from './theme';
@@ -70,23 +68,27 @@ const defaultOptions = {
   statusBar: {
     style: 'light',
     ...Platform.select({
-      ios: { hideWithTopBar: false },
+      ios: { hideWithTopBar: false, blur: true },
       android: { backgroundColor: theme.statusBarBackgroundColor }
     })
   },
   topBar: {
+    visible: false,
+    ...Platform.select({
+      ios: { background: { translucent: false, blur: false } }
+    }),
     title: {
-      color: 'white'
-      // fontFamily: theme.fontSemiBold,
-      // fontSize: theme.fontSizeDefault
+      color: 'black',
+      fontFamily: theme.fontSemiBold,
+      fontSize: theme.fontSizeDefault
     },
     subtitle: {
-      color: 'white'
-      // fontFamily: theme.fontRegular,
-      // fontSize: theme.fontSizeSmallest
+      color: 'black',
+      fontFamily: theme.fontRegular,
+      fontSize: theme.fontSizeSmallest
     },
     backButton: {
-      // visible: false
+      visible: false
     },
     leftButtons: [],
     background: {
@@ -97,158 +99,230 @@ const defaultOptions = {
   }
 };
 
-export const memoizeMerge = memoizeOne((a, b) => deepmerge(a, b));
+const getLayoutComponent = (type, passProps) => {
+  passProps = passProps || {};
 
-export const applyOptions = customOptions => {
-  return deepmerge(defaultOptions, customOptions);
+  switch (type) {
+    case screens.INITIAL:
+      return {
+        component: {
+          id: screens.INITIAL,
+          name: screens.INITIAL,
+          passProps
+        }
+      };
+    case screens.SIGN_IN:
+      return {
+        component: {
+          id: screens.SIGN_IN,
+          name: screens.SIGN_IN,
+          options: SignIn.options,
+          passProps
+        }
+      };
+    case screens.SIGN_UP:
+      return {
+        component: {
+          id: screens.SIGN_UP,
+          name: screens.SIGN_UP,
+          options: SignUp.options,
+          passProps
+        }
+      };
+    case screens.USER_LIST:
+      return {
+        stack: {
+          children: [
+            {
+              component: {
+                id: screens.USER_LIST,
+                name: screens.USER_LIST,
+                passProps
+              }
+            }
+          ],
+          options: {
+            bottomTab: {
+              icon: require('@src/assets/icons/users.png'),
+              selectedIconColor: '#286efa',
+              iconInsets: { bottom: -10 }
+            }
+          }
+        }
+      };
+    case screens.USER_DETAIL:
+      return {
+        component: {
+          id: screens.USER_DETAIL,
+          name: screens.USER_DETAIL,
+          passProps
+        }
+      };
+    case screens.DOCTOR:
+      return {
+        stack: {
+          children: [
+            {
+              component: {
+                id: screens.DOCTOR,
+                name: screens.DOCTOR,
+                passProps
+              }
+            }
+          ],
+          options: {
+            bottomTab: {
+              icon: require('@src/assets/icons/doctor.png'),
+              selectedIconColor: '#286efa',
+              iconInsets: { bottom: -10 }
+            }
+          }
+        }
+      };
+    case screens.TECHNICIAN:
+      return {
+        stack: {
+          children: [
+            {
+              component: {
+                id: screens.TECHNICIAN,
+                name: screens.TECHNICIAN,
+                passProps
+              }
+            }
+          ],
+          options: {
+            bottomTab: {
+              icon: require('@src/assets/icons/back.png'),
+              selectedIconColor: '#286efa',
+              iconInsets: { bottom: -10 }
+            }
+          }
+        }
+      };
+    case screens.ME:
+      return {
+        stack: {
+          children: [
+            {
+              component: {
+                id: screens.ME,
+                name: screens.ME,
+                passProps
+              }
+            }
+          ],
+          options: {
+            bottomTab: {
+              icon: require('@src/assets/icons/me.png'),
+              selectedIconColor: '#286efa',
+              iconInsets: { bottom: -10 }
+            }
+          }
+        }
+      };
+    case screens.SETTING:
+      return {
+        stack: {
+          children: [
+            {
+              component: {
+                id: screens.SETTING,
+                name: screens.SETTING,
+                passProps
+              }
+            }
+          ],
+          options: {
+            bottomTab: {
+              icon: require('@src/assets/icons/menu.png'),
+              selectedIconColor: '#286efa',
+              iconInsets: { bottom: -10 }
+            }
+          }
+        }
+      };
+    default:
+      console.log('unhandle screen component:', type);
+      break;
+  }
 };
 
-const components = {
-  USER_LIST: {
-    stack: {
-      children: [
-        {
-          component: {
-            id: screens.USER_LIST,
-            name: screens.USER_LIST
-          }
-        }
-      ],
-      options: applyOptions({
-        bottomTabs: {
-          translucent: true,
-          hideShadow: false,
-          ...Platform.select({ android: { titleDisplayMode: 'alwaysShow' } })
-        }
-      })
-    },
-    options: applyOptions({
-      bottomTab: {
-        text: 'Khách hàng',
-        icon: require('@src/assets/icons/home_selected.png'),
-        fontSize: 10
-      }
+const bottomTabsOptions = {
+  topBar: {
+    visible: false
+  },
+  bottomTabs: {
+    ...Platform.select({
+      ios: {
+        translucent: true,
+        hideShadow: false
+      },
+      android: { titleDisplayMode: 'alwaysHide' }
     })
   },
-  USER_DETAIL: {
-    id: screens.USER_DETAIL,
-    name: screens.USER_DETAIL
-  },
-  DOCTOR: {
-    stack: {
-      children: [
-        {
-          component: {
-            id: screens.DOCTOR,
-            name: screens.DOCTOR
-          }
-        }
-      ]
-    },
-    options: applyOptions({
-      bottomTab: {
-        text: 'Khách hàng',
-        icon: require('@src/assets/icons/home_selected.png'),
-        fontSize: 10
-      }
-    })
-  },
-  TECHNICIAN: {
-    stack: {
-      children: [
-        {
-          component: {
-            id: screens.TECHNICIAN,
-            name: screens.TECHNICIAN
-          }
-        }
-      ]
-    },
-    options: applyOptions({
-      bottomTab: {
-        text: 'Khách hàng',
-        icon: require('@src/assets/icons/home_selected.png'),
-        fontSize: 10
-      }
-    })
-  },
-  ME: {
-    stack: {
-      children: [
-        {
-          component: {
-            id: screens.ME,
-            name: screens.ME
-          }
-        }
-      ]
-    },
-    options: applyOptions({
-      bottomTab: {
-        text: 'Tôi',
-        icon: require('@src/assets/icons/home_selected.png'),
-        fontSize: 10
-      }
-    })
-  },
-  SETTING: {
-    stack: {
-      children: [
-        {
-          component: {
-            id: screens.SETTING,
-            name: screens.SETTING
-          }
-        }
-      ]
-    },
-    options: applyOptions({
-      bottomTab: {
-        text: 'Khách hàng',
-        icon: require('@src/assets/icons/home_selected.png'),
-        fontSize: 10
-      }
+  bottomTab: {
+    selectedIconColor: '#286efa',
+    ...Platform.select({
+      ios: { iconInsets: { top: 0, left: 0, bottom: 0, right: 0 } }
     })
   }
+};
+
+export const layoutTypes = {
+  OWNER: 'owner',
+  DOCTOR: 'doctor',
+  TECHNICIAN: 'technician',
+  RECEPTIONIST: 'receptionist'
 };
 
 const layouts = {
+  INIT: {
+    stack: {
+      children: [getLayoutComponent(screens.INITIAL)]
+    }
+  },
   OWNER: {
     bottomTabs: {
+      id: layoutTypes.OWNER,
       children: [
-        components.USER_LIST,
-        components.DOCTOR,
-        components.ME,
-        components.SETTING
-      ]
+        getLayoutComponent(screens.USER_LIST),
+        getLayoutComponent(screens.DOCTOR),
+        getLayoutComponent(screens.ME),
+        getLayoutComponent(screens.SETTING)
+      ],
+      options: bottomTabsOptions
     }
   },
   DOCTOR: {
     bottomTabs: {
-      children: [components.USER_LIST, components.DOCTOR, components.ME]
+      id: layoutTypes.DOCTOR,
+      children: [
+        getLayoutComponent(screens.USER_LIST),
+        getLayoutComponent(screens.DOCTOR),
+        getLayoutComponent(screens.ME)
+      ],
+      options: bottomTabsOptions
     }
   },
   TECHNICIAN: {
     bottomTabs: {
-      children: [components.TECHNICIAN, components.ME]
+      id: layoutTypes.TECHNICIAN,
+      children: [
+        getLayoutComponent(screens.TECHNICIAN),
+        getLayoutComponent(screens.ME)
+      ],
+      options: bottomTabsOptions
     }
   },
   RECEPTIONIST: {
-    children: [components.USER_LIST, components.ME]
-  }
-};
-
-const initialLayout = {
-  root: {
-    stack: {
+    bottomTabs: {
+      id: layoutTypes.RECEPTIONIST,
       children: [
-        {
-          component: {
-            id: screens.INITIAL,
-            name: screens.INITIAL
-          }
-        }
-      ]
+        getLayoutComponent(screens.USER_LIST),
+        getLayoutComponent(screens.ME)
+      ],
+      options: bottomTabsOptions
     }
   }
 };
@@ -256,37 +330,29 @@ const initialLayout = {
 export const setupLayout = store => {
   registerScreens(store);
   Navigation.setDefaultOptions(defaultOptions);
-  Navigation.setRoot(initialLayout);
+  Navigation.setRoot({ root: layouts.INIT });
 };
 
-export const setPrimaryLayout = type => {
-  Navigation.setRoot(layouts[type]);
+export const gotoPrimaryScreen = (componentId, type) => {
+  Navigation.push(componentId, layouts[type]);
 };
 
-export const gotoSignIn = componentId => {
-  Navigation.push(componentId, {
-    component: {
-      id: screens.SIGN_IN,
-      name: screens.SIGN_IN,
-      options: applyOptions({
-        topBar: {
-          visible: false
-        }
-      })
+export const popScreen = componentId => {
+  Navigation.pop(componentId);
+};
+
+export const showSignIn = () => {
+  Navigation.showModal({
+    stack: {
+      children: [getLayoutComponent(screens.SIGN_IN)]
     }
   });
+};
+
+export const hideSignIn = componentId => {
+  Navigation.dismissModal(componentId);
 };
 
 export const gotoSignUp = componentId => {
-  Navigation.push(componentId, {
-    component: {
-      id: screens.SIGN_UP,
-      name: screens.SIGN_UP,
-      options: applyOptions({
-        topBar: {
-          visible: false
-        }
-      })
-    }
-  });
+  Navigation.push(componentId, getLayoutComponent(screens.SIGN_UP));
 };

@@ -9,8 +9,9 @@ import { reducers } from './models';
 const rootReducer = combineReducers(reducers);
 
 const persistConfig = {
-  key: 'root',
+  key: 'salonmage',
   storage: FastStorage
+  // blacklist: ['user']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

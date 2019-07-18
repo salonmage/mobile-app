@@ -4,7 +4,7 @@ import { persistStore } from 'redux-persist';
 import { setupLayout } from './common/layout';
 import configureStore from './store';
 import { setTheme, LightTheme, DarkTheme } from './common/theme';
-import { startup } from './store/logic';
+import { startup } from './store/logics';
 //-----------------------------------------------
 if (__DEV__) require('./common/__DEV__');
 //-----------------------------------------------
@@ -20,4 +20,6 @@ Navigation.events().registerAppLaunchedListener(() => {
   const theme = state.theme === 'dark' ? DarkTheme : LightTheme;
   setTheme(theme);
   setupLayout(store);
+
+  // ? subscribe receive notification
 });
