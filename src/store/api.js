@@ -116,11 +116,107 @@ export const fetchAttributeDefinitions = () => async dispatch => {
   );
 };
 
-export const fetchUser = ({ user_id }) => async dispatch => {
+export const fetchUser = user_id => async dispatch => {
   return dispatch(
     requestWithRefreshToken({
       method: 'get',
       url: `${API_V1_URL}/users/${user_id}`
+    })
+  );
+};
+
+export const createUser = data => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'post',
+      url: `${API_V1_URL}/users`,
+      data
+    })
+  );
+};
+
+export const updateUser = (user_id, data) => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'post',
+      url: `${API_V1_URL}/users/${user_id}`,
+      data
+    })
+  );
+};
+
+export const fetchAllBeautyServices = () => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'get',
+      url: `${API_V1_URL}/beauty-salon/services`
+    })
+  );
+};
+
+export const createBeautyService = data => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'post',
+      url: `${API_V1_URL}/beauty-salon/services`,
+      data
+    })
+  );
+};
+
+export const updateBeautyService = (id, data) => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'post',
+      url: `${API_V1_URL}/beauty-salon/services/${id}`,
+      data
+    })
+  );
+};
+
+export const deleteBeautyService = id => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'delete',
+      url: `${API_V1_URL}/beauty-salon/services/${id}`
+    })
+  );
+};
+
+export const fetchAllComboBeautyServices = () => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'get',
+      url: `${API_V1_URL}/beauty-salon/combo-services`
+    })
+  );
+};
+
+export const createComboBeautyService = data => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'post',
+      url: `${API_V1_URL}/beauty-salon/combo-services`,
+      data
+    })
+  );
+};
+
+export const updateComboBeautyService = (id, data) => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'post',
+      url: `${API_V1_URL}/beauty-salon/combo-services/${id}`,
+      data
+    })
+  );
+};
+
+export const deleteComboBeautyService = id => async dispatch => {
+  return dispatch(
+    requestWithRefreshToken({
+      method: 'delete',
+      url: `${API_V1_URL}/beauty-salon/combo-services/${id}`
     })
   );
 };

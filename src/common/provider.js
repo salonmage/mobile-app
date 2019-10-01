@@ -1,11 +1,9 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
-
-import theme from './theme';
+import {Provider} from 'react-redux';
+import {ThemeProvider} from 'styled-components';
 //-----------------------------------------------
 
-export default function withProviders(WrappedComponent, store) {
+export default function withProviders(WrappedComponent, theme, store) {
   return props => (
     <ThemeProvider theme={theme}>
       <Provider store={store}>

@@ -15,3 +15,18 @@ export const useNavigationButtonPressed = (handler, componentId) => {
     };
   }, [componentId]);
 };
+
+export const useBottomTabEvent = (handler, componentId) => {
+  useEffect(() => {
+    const bottomTabEventListener = Navigation.events().registerBottomTabSelectedListener(
+      ({ selectedTabIndex, unselectedTabIndex }) => {
+        if (selectedTabIndex !== unselectedTabIndex) {
+          handler(selectedTabIndex, unselectedTabIndex);
+        }
+      }
+    );
+    return () => {
+      bottomTabEventListener.remove();
+    };
+  }, [componentId]);
+};

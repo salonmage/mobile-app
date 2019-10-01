@@ -1,7 +1,11 @@
 export const LightTheme = {
+  isTablet: false,
+
   primaryColor: '#1890ff',
-  statusBarBackgroundColor: 'white',
-  topBarBackgroundColor: 'white',
+  layoutBackgroundColor: 'white',
+  statusBarBackgroundColor: '#0C59FB',
+  topBarBackgroundColor: '#0C59FB',
+  topBarTitleColor: 'white',
   touchBackgroundColor: 'white',
 
   iconSizeDefault: 24,
@@ -12,8 +16,8 @@ export const LightTheme = {
   button: {
     backgroundColor: {
       primary: '#ff6000',
-      secondary: '#ffebe5'
-    }
+      secondary: '#ffebe5',
+    },
   },
 
   fontRegular: 'OpenSans-Regular',
@@ -26,17 +30,10 @@ export const LightTheme = {
   fontSizeDefault: 16,
   fontSizeSmall: 14,
   fontSizeSmaller: 13,
-  fontSizeSmallest: 12
+  fontSizeSmallest: 12,
 };
 
 export const DarkTheme = {
-  ...LightTheme
+  ...LightTheme,
   // topBarBackgroundColor: 'white'
 };
-
-let theme = { ...LightTheme };
-
-export const setTheme = obj => {
-  theme = obj;
-};
-export default theme;

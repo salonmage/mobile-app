@@ -2,6 +2,7 @@ import each from 'lodash/each';
 import isEmpty from 'lodash/isEmpty';
 import WS from '../utils/wsclient';
 import Config from 'react-native-config';
+import faker from 'faker/locale/vi';
 
 import { selectors, actionTypes } from './models';
 import * as api from './api';
@@ -32,6 +33,9 @@ export const boot = () => async (dispatch, state) => {
 
   dispatch(fetchUpdateUserAttributeDefinitions());
   dispatch(fetchUpdateUserList());
+  dispatch(fetchUpdateBeautyServiceList());
+  dispatch(fetchUpdateComboBeautyServiceList());
+  dispatch(createDemo());
 };
 
 export const updateMyInfo = payload => async (dispatch, state) => {
@@ -113,6 +117,11 @@ export const wsconnect = () => async (dispatch, state) => {
       }
 
       switch (message.type) {
+        case 'user_created':
+          dispatch({
+            type: actionTypes.UPDATE_USER_LIST,
+            payload: [message.data.user]
+          });
         default:
           if (__DEV__) console.log('unhandle event:', message);
           break;
@@ -157,4 +166,109 @@ export const reset = () => async (dispatch, state) => {
 
 export const signout = () => async (dispatch, state) => {
   await dispatch(reset());
+};
+
+//-----------------------------------------------
+
+export const fetchUpdateBeautyServiceList = () => async dispatch => {
+  const res = await dispatch(api.fetchAllBeautyServices());
+  if (res && res.error) {
+    return;
+  }
+  dispatch({ type: actionTypes.UPDATE_BEAUTY_SERVICE, payload: res.data });
+};
+
+export const fetchUpdateComboBeautyServiceList = () => async dispatch => {
+  const res = await dispatch(api.fetchAllComboBeautyServices());
+  if (res && res.error) {
+    return;
+  }
+  dispatch({
+    type: actionTypes.UPDATE_COMBO_BEAUTY_SERVICE,
+    payload: res.data
+  });
+};
+
+export const createDemo = () => async dispatch => {
+  // const beautyServices = [
+  //   {
+  //     name: 'Tẩy trang',
+  //     retail_price: 20000,
+  //     duration: 300
+  //   },
+  //   {
+  //     name: 'Rửa mặt',
+  //     retail_price: 20000,
+  //     duration: 300
+  //   },
+  //   {
+  //     name: 'Tẩy da chết',
+  //     retail_price: 50000,
+  //     duration: 300
+  //   },
+  //   {
+  //     name: 'Xông hơi',
+  //     retail_price: 50000,
+  //     duration: 300
+  //   },
+  //   {
+  //     name: 'Lấy nhân mụn',
+  //     retail_price: 50000,
+  //     duration: 300
+  //   },
+  //   {
+  //     name: 'Mát xa da mặt',
+  //     retail_price: 10000,
+  //     duration: 300
+  //   },
+  //   {
+  //     name: 'Điều trị laze IPL',
+  //     retail_price: 100000,
+  //     duration: 900
+  //   },
+  //   {
+  //     name: 'Đắp mark',
+  //     retail_price: 20000
+  //   },
+  //   {
+  //     name: 'Toner',
+  //     retail_price: 20000
+  //   },
+  //   {
+  //     name: 'Kem dưỡng',
+  //     retail_price: 10000
+  //   },
+  //   {
+  //     name: 'Kem chống nắng',
+  //     retail_price: 10000
+  //   }
+  // ];
+  // each(beautyServices, s => dispatch(api.createBeautyService(s)));
+  // for (let i = 1; i <= 10000; i++) {
+  //   let data = {
+  //     attributes: [
+  //       {
+  //         key: 'fullname',
+  //         text: faker.fake(
+  //           '{{name.lastName}}, {{name.firstName}} {{name.suffix}}'
+  //         )
+  //       },
+  //       {
+  //         key: 'email',
+  //         text: faker.internet.email()
+  //       },
+  //       {
+  //         key: 'phone',
+  //         text: faker.phone.phoneNumber()
+  //       },
+  //       {
+  //         key: 'avatar_url',
+  //         text: faker.internet.avatar()
+  //       }
+  //     ]
+  //   };
+  // console.log('fake use:', data);
+  // await sleep(1000);
+  // dispatch(api.createUser(data));
+  // }
 };

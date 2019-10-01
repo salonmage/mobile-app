@@ -6,7 +6,7 @@ import { gotoPrimaryScreen, popScreen, showSignIn } from '../../common/layout';
 import { selectors } from '../../store/models';
 //-----------------------------------------------
 
-export default function Initial(props) {
+const Initial = React.memo(props => {
   const isAthenticated = useSelector(selectors.isAuthenticatedSelector);
   const type = useSelector(selectors.staffTypeSelector);
 
@@ -23,4 +23,15 @@ export default function Initial(props) {
   }, [isAthenticated]);
 
   return null;
-}
+});
+
+Initial.options = {
+  topBar: {
+    visible: false,
+    backButton: {
+      visible: false
+    }
+  }
+};
+
+export default Initial;

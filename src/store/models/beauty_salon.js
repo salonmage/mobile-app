@@ -9,7 +9,8 @@ export const actionTypes = {
   UPDATE_BEAUTY_SERVICE: 'beauty_salon/UPDATE_BEAUTY_SERVICE',
   DELETE_BEAUTY_SERVICE: 'beauty_salon/DELETE_BEAUTY_SERVICE',
   UPDATE_COMBO_BEAUTY_SERVICE: 'beauty_salon/UPDATE_COMBO_BEAUTY_SERVICE',
-  DELETE_COMBO_BEAUTY_SERVICE: 'beauty_salon/DELETE_COMBO_BEAUTY_SERVICE'
+  DELETE_COMBO_BEAUTY_SERVICE: 'beauty_salon/DELETE_COMBO_BEAUTY_SERVICE',
+  UPDATE_BEAUTY_ORDER: 'beauty_salon/UPDATE_BEAUTY_ORDER'
 };
 
 export const initialState = {
@@ -21,8 +22,8 @@ export const reducer = (state = initialState, action) => {
   const payload = action.payload || null;
   switch (action.type) {
     case actionTypes.UPDATE_BEAUTY_SERVICE:
-      const sb = state.beauty_services;
-      each(payload, r => (sb[r.id] = r));
+      const bs = state.beauty_services;
+      each(payload, r => (bs[r.id] = r));
       return { ...state, beauty_services: bs };
     case actionTypes.DELETE_BEAUTY_SERVICE:
       const newbs = state.beauty_services;

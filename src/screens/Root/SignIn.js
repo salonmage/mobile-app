@@ -87,7 +87,7 @@ const SignIn = React.memo(props => {
 
 SignIn.options = {
   topBar: {
-    visible: true,
+    // visible: true,
     title: {
       text: 'Welcome back'
     }
@@ -103,7 +103,7 @@ const Container = styled(KeyboardAvoid)`
   align-items: center;
 `;
 const Box = styled(View)`
-  width: 75%;
+  width: 35%;
   margin-bottom: 40px;
 `;
 

@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { View, Image } from 'react-native';
 import styled, { css } from 'styled-components';
 //-----------------------------------------------
