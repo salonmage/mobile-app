@@ -20,7 +20,7 @@
     "axios": "^0.19.0",
     "faker": "^4.1.0",
     "fast-json-stringify": "^1.15.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "lz-string": "^1.4.4",
     "memoize-one": "^5.1.1",
     "nanoid": "^2.1.1",
